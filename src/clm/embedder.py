@@ -81,6 +81,6 @@ class Embedder:
 
     def healthy(self) -> bool:
         try:
-            return self.session.get(self.url.rsplit("/v1/", 1)[0] + "/v1/models", timeout=5).status_code == 200
+            return self.session.get(self.url.rsplit("/", 1)[0] + "/models", timeout=5).status_code == 200
         except requests.RequestException:
             return False

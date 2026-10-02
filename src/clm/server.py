@@ -170,6 +170,9 @@ def main() -> None:
     ap.add_argument("--port", type=int, default=int(os.environ.get("CLM_PORT", 8700)))
     ap.add_argument("--emb-url", default=os.environ.get("CLM_EMB_URL", "http://127.0.0.1:8090/v1/embeddings"))
     ap.add_argument("--emb-model", default=os.environ.get("CLM_EMB_MODEL", "qwen3-8b"))
+    ap.add_argument("--emb-api-key", default=os.environ.get("CLM_EMB_API_KEY"),
+                    help="bearer token sent to the embedder (prefer the CLM_EMB_API_KEY environment variable, "
+                         "which keeps it out of the shell history and process list)")
     ap.add_argument("--max-tokens", type=int, default=int(os.environ.get("CLM_EMB_MAX_TOKENS", 2048)),
                     help="truncate texts to this many tokens before embedding (the embedder's max-model-len)")
     ap.add_argument("--ckpt", default=os.environ.get("CLM_CKPT"),
@@ -200,7 +203,8 @@ def main() -> None:
             raise SystemExit(f"--model expects NAME=PATH, got {spec!r}")
         extra[name] = path
     device = args.device or default_device()
-    engine = Engine(Embedder(args.emb_url, args.emb_model, max_tokens=args.max_tokens), checkpoint=ckpt,
+    engine = Engine(Embedder(args.emb_url, args.emb_model, max_tokens=args.max_tokens,
+                             api_key=args.emb_api_key), checkpoint=ckpt,
                     models=extra, checkpoint_dir=args.ckpt_dir, device=device,
                     action_cache=args.action_cache)
     if not engine.heads and not extra:

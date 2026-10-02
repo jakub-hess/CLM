@@ -425,7 +425,7 @@ files only; every API route above shadows it.
 
 ```
 clm-serve [--port 8700] [--emb-url http://127.0.0.1:8090/v1/embeddings] [--emb-model qwen3-8b]
-          [--max-tokens 2048] [--ckpt PATH] [--ckpt-dir DIR] [--model NAME=PATH ...] [--device cpu|cuda]
+          [--emb-api-key KEY] [--max-tokens 2048] [--ckpt PATH] [--ckpt-dir DIR] [--model NAME=PATH ...] [--device cpu|cuda]
           [--action-cache 0.02|512MiB|0] [--no-ui] [--cors]
 ```
 
@@ -434,9 +434,10 @@ head in `~/.cache/clm/`, downloaded if missing); `--ckpt-dir DIR` serves every
 `*.pt` there under its file stem; `--model NAME=PATH` adds one more.
 The heads run on the GPU when torch sees one, else on the CPU; `--device` (or
 `CLM_DEVICE`) forces one. Checkpoints hot-reload when the file changes. Set `CLM_API_KEY` to require
-`Authorization: Bearer <key>` (the playground has a field for it). Environment
-equivalents: `CLM_PORT`, `CLM_EMB_URL`, `CLM_EMB_MODEL`, `CLM_CKPT`,
-`CLM_DEVICE`, `CLM_ACTION_CACHE`.
+`Authorization: Bearer <key>` (the playground has a field for it). `--emb-api-key`
+is the separate token clm-serve sends to the embedder, for a hosted endpoint behind
+auth. Environment equivalents: `CLM_PORT`, `CLM_EMB_URL`, `CLM_EMB_MODEL`,
+`CLM_EMB_API_KEY`, `CLM_CKPT`, `CLM_DEVICE`, `CLM_ACTION_CACHE`.
 
 `--no-ui` drops the playground and serves the API alone. `--cors` allows browser
 requests from any origin and is off by default, because an API key otherwise

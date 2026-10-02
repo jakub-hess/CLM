@@ -38,7 +38,8 @@ class Engine:
                  models: dict[str, str] | None = None, checkpoint_dir: str | None = None, device: str | None = None,
                  emb_url: str | None = None, emb_model: str | None = None, action_cache: Any = None):
         self.embedder = embedder or Embedder(url=emb_url or os.environ.get("CLM_EMB_URL", "http://127.0.0.1:8090/v1/embeddings"),
-                                             model=emb_model or os.environ.get("CLM_EMB_MODEL", "qwen3-8b"))
+                                             model=emb_model or os.environ.get("CLM_EMB_MODEL", "qwen3-8b"),
+                                             api_key=os.environ.get("CLM_EMB_API_KEY"))
         device = device or default_device()
         self.heads: dict[str, HeadPair] = {}
         ck = checkpoint or default_checkpoint()
