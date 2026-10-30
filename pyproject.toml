@@ -26,19 +26,18 @@ dependencies = [
     "torch>=2.1",
     "fastapi>=0.100",
     "uvicorn>=0.23",
-    # the Qwen3-8B embedder (GPU)
-    "vllm>=0.6",
-    # train/finetune.py: read the published Parquet embedding datasets
-    "pyarrow>=14",
 ]
 
 [project.optional-dependencies]
-# kept for compatibility: serve and vllm are now installed by default
+# kept for compatibility: the server is installed by default
 serve = []
-vllm = []
+# the local Qwen3-8B embedder (GPU); not needed when an external /v1/embeddings endpoint is used
+vllm = ["vllm>=0.6"]
+# train/finetune.py: read the published Parquet embedding datasets
+train = ["pyarrow>=14"]
 # download checkpoints from the Hugging Face Hub with the hub client (plain HTTPS works without it)
 hf = ["huggingface_hub>=0.20"]
-all = ["contrastive-lm[hf]"]
+all = ["contrastive-lm[hf,vllm,train]"]
 
 [project.scripts]
 clm-serve = "clm.server:main"

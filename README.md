@@ -39,13 +39,16 @@ We invite the community to plug it into their own agents and benchmarks!
 ## Installation
 
 ```bash
-pip install contrastive-lm
+pip install "contrastive-lm[vllm]"      # server + local Qwen3-8B encoder (GPU)
+pip install contrastive-lm              # server only, against an existing /v1/embeddings endpoint
 ```
+
+Add `[train]` for `train/finetune.py`, or `[all]` for everything.
 
 To install the latest from a clone:
 
 ```bash
-pip install -e .
+pip install -e ".[vllm]"
 ```
 
 ---
