@@ -18,3 +18,6 @@ logs/*.log
 examples/t_rex/data/
 examples/t_rex/cache/
 examples/t_rex/artifacts/
+# tools/clm-up.sh runtime files
+tools/clm.log
+tools/clm.pid
