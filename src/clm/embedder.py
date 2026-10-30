@@ -41,6 +41,7 @@ class Embedder:
         body: dict[str, Any] = {"model": self.model, "input": texts, "encoding_format": "base64"}
         if self.max_tokens:
             body["truncate_prompt_tokens"] = self.max_tokens
+            body["truncation_side"] = "left"
         try:
             r = self.session.post(self.url, json=body, timeout=self.timeout)
         except requests.RequestException as e:
